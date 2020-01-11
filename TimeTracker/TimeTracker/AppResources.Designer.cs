@@ -61,11 +61,56 @@ namespace TimeTracker {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alert!.
+        /// </summary>
+        public static string AlertHeader {
+            get {
+                return ResourceManager.GetString("AlertHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time Tracker.
         /// </summary>
         public static string AppName {
             get {
                 return ResourceManager.GetString("AppName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home Page.
+        /// </summary>
+        public static string HomeTitle {
+            get {
+                return ResourceManager.GetString("HomeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Okay.
+        /// </summary>
+        public static string Ok {
+            get {
+                return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Failed!.
+        /// </summary>
+        public static string SaveFail {
+            get {
+                return ResourceManager.GetString("SaveFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Complete!.
+        /// </summary>
+        public static string SaveSuccess {
+            get {
+                return ResourceManager.GetString("SaveSuccess", resourceCulture);
             }
         }
     }

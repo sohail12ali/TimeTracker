@@ -1,24 +1,27 @@
-﻿using System;
+﻿using Realms;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using TimeTracker.Services;
-using TimeTracker.Views;
 
 namespace TimeTracker
 {
     public partial class App : Application
     {
-
         public App()
         {
+            DependencyService.Register<Interfaces.IRealmServices, Services.RealmServices>();
             InitializeComponent();
-
-            DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
         }
 
         protected override void OnStart()
         {
+            RealmConfiguration config = new RealmConfiguration
+            {
+                ShouldDeleteIfMigrationNeeded = true
+            };
+            RealmConfiguration.DefaultConfiguration = config;
+
+            string dbPath = RealmConfiguration.DefaultConfiguration.DatabasePath;
+            System.Diagnostics.Debug.WriteLine($"Database path : {dbPath}");
         }
 
         protected override void OnSleep()

@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.Android", "Time
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.iOS", "TimeTracker\TimeTracker.iOS\TimeTracker.iOS.csproj", "{CF8020C8-5E09-4D12-ABCB-4D4112AC12E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker", "TimeTracker\TimeTracker\TimeTracker.csproj", "{F3873B08-1B2A-40CD-BF62-C4AA83F67D88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeTracker", "TimeTracker\TimeTracker\TimeTracker.csproj", "{F3873B08-1B2A-40CD-BF62-C4AA83F67D88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

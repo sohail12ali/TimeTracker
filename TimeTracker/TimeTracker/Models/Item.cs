@@ -2,10 +2,13 @@
 
 namespace TimeTracker.Models
 {
-    public class Item
+    public class Item : Realms.RealmObject
     {
-        public string Id { get; set; }
-        public string Text { get; set; }
-        public string Description { get; set; }
+        [Realms.PrimaryKey]
+        public string Id { get; set; } = DateTime.Now.ToShortDateString();
+
+        public DateTimeOffset InTime { get; set; } = DateTimeOffset.Now;
+        public DateTimeOffset OutTime { get; set; } = DateTimeOffset.Now;
+        public string Description { get; set; } = DateTime.Now.ToLongDateString();
     }
 }

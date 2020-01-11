@@ -2,33 +2,41 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-
+using TimeTracker.Interfaces;
 using Xamarin.Forms;
-
-using TimeTracker.Models;
-using TimeTracker.Services;
 
 namespace TimeTracker.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        #region Properties & Fields
 
-        bool isBusy = false;
+        protected IRealmServices RealmServices => DependencyService.Get<IRealmServices>();
+
+        private bool isBusy = false;
+
         public bool IsBusy
         {
             get { return isBusy; }
             set { SetProperty(ref isBusy, value); }
         }
 
-        string title = string.Empty;
+        private string title = string.Empty;
+
         public string Title
         {
             get { return title; }
             set { SetProperty(ref title, value); }
         }
 
+        #endregion Properties & Fields
+
+        public BaseViewModel()
+        {
+        }
+
         protected bool SetProperty<T>(ref T backingStore, T value,
+
             [CallerMemberName]string propertyName = "",
             Action onChanged = null)
         {
@@ -42,7 +50,9 @@ namespace TimeTracker.ViewModels
         }
 
         #region INotifyPropertyChanged
+
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             var changed = PropertyChanged;
@@ -51,6 +61,7 @@ namespace TimeTracker.ViewModels
 
             changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        #endregion
+
+        #endregion INotifyPropertyChanged
     }
 }

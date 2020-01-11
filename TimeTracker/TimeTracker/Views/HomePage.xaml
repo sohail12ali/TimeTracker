@@ -7,7 +7,7 @@
              xmlns:vm="clr-namespace:TimeTracker.ViewModels"
              x:Class="TimeTracker.Views.HomePage"
              xmlns:converter="clr-namespace:TimeTracker.Converter"
-             Title="{Binding Title}"
+             Title="{Binding Item.Description}"
              Visual="Material"
              BackgroundColor="AntiqueWhite">
 
@@ -20,46 +20,101 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <StackLayout Padding="10">
+        <ScrollView Orientation="Neither">
+            <StackLayout Padding="10">
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                <!-- Time Picker-->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                <Frame Grid.Row="0"
+                    <Frame Grid.Row="0"
                        Grid.Column="0">
-                    <Label Text="In Time"
+                        <Label Text="In Time"
                        VerticalOptions="CenterAndExpand"
                        HorizontalOptions="CenterAndExpand" />
-                </Frame>
+                    </Frame>
 
-                <Frame Grid.Row="0"
+                    <Frame Grid.Row="0"
                        Grid.Column="1">
-                    <TimePicker Time="{Binding Item.InTime, Converter={StaticResource DateOffToTimespan}}"
+                        <TimePicker Time="{Binding Item.InTime, Converter={StaticResource DateOffToTimespan}}"
                        VerticalOptions="CenterAndExpand"
                        HorizontalOptions="CenterAndExpand" />
-                </Frame>
+                    </Frame>
 
-                <Frame Grid.Row="1"
+                    <Frame Grid.Row="1"
                        Grid.Column="0">
-                    <Label Text="Out Time"
+                        <Label Text="Out Time"
                        VerticalOptions="CenterAndExpand"
                        HorizontalOptions="CenterAndExpand" />
-                </Frame>
+                    </Frame>
 
-                <Frame Grid.Row="1"
+                    <Frame Grid.Row="1"
                        Grid.Column="1">
-                    <TimePicker Time="{Binding Item.OutTime, Converter={StaticResource DateOffToTimespan}}"
+                        <TimePicker Time="{Binding Item.OutTime, Converter={StaticResource DateOffToTimespan}}"
                        VerticalOptions="CenterAndExpand"
                        HorizontalOptions="CenterAndExpand" />
-                </Frame>
-            </Grid>
-            <Button Text="Save" Command="{Binding SaveCommand}" />
-        </StackLayout>
+                    </Frame>
+                </Grid>
+
+                <!--Date Picker-->
+                <StackLayout>
+                    <Frame>
+                        <DatePicker Date="{Binding DateTimeProperty}" />
+                    </Frame>
+                </StackLayout>
+
+                <CollectionView
+                    ItemsSource="{Binding ItemsList}"
+                    VerticalOptions="End">
+
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalOptions="FillAndExpand"
+                                  VerticalOptions="Center">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackLayout Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+                                             HorizontalOptions="CenterAndExpand">
+                                    <Label Text="{Binding Description}" />
+
+                                </StackLayout>
+
+                                <Frame Grid.Row="1"
+                                           Grid.Column="0">
+                                    <TimePicker Time="{Binding InTime, Converter={StaticResource DateOffToTimespan}}"
+                                                    VerticalOptions="CenterAndExpand"
+                                                    HorizontalOptions="CenterAndExpand" />
+                                </Frame>
+
+                                <Frame Grid.Row="1"
+                                           Grid.Column="1">
+                                    <TimePicker Time="{Binding OutTime, Converter={StaticResource DateOffToTimespan}}"
+                                           VerticalOptions="CenterAndExpand"
+                                           HorizontalOptions="CenterAndExpand" />
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

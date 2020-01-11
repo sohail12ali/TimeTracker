@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,6 +22,22 @@ namespace TimeTracker.ViewModels
             set { SetProperty(ref _item, value); }
         }
 
+        private DateTime _dateTimeProperty = DateTime.Now;
+
+        public DateTime DateTimeProperty
+        {
+            get { return _dateTimeProperty; }
+            set { SetProperty(ref _dateTimeProperty, value, onChanged: async () => await DateChangeHandler(value)); }
+        }
+
+        private ICollection<Item> _itemsList;
+
+        public ICollection<Item> ItemsList
+        {
+            get { return _itemsList; }
+            set { SetProperty(ref _itemsList, value); }
+        }
+
         public ICommand SaveCommand { get; }
 
         #endregion Properties & Fields
@@ -30,6 +48,20 @@ namespace TimeTracker.ViewModels
 
             SaveCommand = new Command(async () => await SaveItem());
             _ = GetDataFromDBAsync();
+        }
+
+        #region Tasks & Methods
+
+        private async Task DateChangeHandler(DateTime dates)
+        {
+            if (dates != null)
+            {
+                Item = new Item
+                { Id = dates.ToShortDateString(), Description = dates.ToLongDateString() };
+                await GetDataFromDBAsync();
+            }
+
+            await Task.FromResult(true);
         }
 
         private async Task GetDataFromDBAsync()
@@ -45,6 +77,10 @@ namespace TimeTracker.ViewModels
                 else
                 {
                     await SaveItem();
+                }
+                if (list != null && list.Count() > 0)
+                {
+                    ItemsList = new ObservableCollection<Item>(list.ToList());
                 }
             }
             catch (Exception ex)
@@ -65,5 +101,7 @@ namespace TimeTracker.ViewModels
                 await App.Current.MainPage.DisplayAlert(AppResources.AlertHeader, AppResources.SaveFail, AppResources.Ok);
             }
         }
+
+        #endregion Tasks & Methods
     }
 }

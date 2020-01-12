@@ -19,7 +19,15 @@ namespace TimeTracker.ViewModels
         public Item Item
         {
             get { return _item; }
-            set { SetProperty(ref _item, value); }
+            set { SetProperty(ref _item, value, onChanged: async () => await TimeSpentChange()); }
+        }
+
+        private string _timeSpent;
+
+        public string TimeSpent
+        {
+            get { return _timeSpent; }
+            set { SetProperty(ref _timeSpent, value); }
         }
 
         private DateTime _dateTimeProperty = DateTime.Now;
@@ -39,6 +47,7 @@ namespace TimeTracker.ViewModels
         }
 
         public ICommand SaveCommand { get; }
+        public ICommand DeleteCommand { get; }
 
         #endregion Properties & Fields
 
@@ -47,10 +56,22 @@ namespace TimeTracker.ViewModels
             Title = AppResources.HomeTitle;
 
             SaveCommand = new Command(async () => await SaveItem());
+            DeleteCommand = new Command(async () => await ClearDB());
             _ = GetDataFromDBAsync();
         }
 
         #region Tasks & Methods
+
+        private async Task TimeSpentChange()
+        {
+            if (Item != null)
+            {
+                var result = Item.OutTime - Item.InTime;
+
+                TimeSpent = $"Spent time : {result.ToString()}";
+            }
+            await Task.FromResult(true);
+        }
 
         private async Task DateChangeHandler(DateTime dates)
         {
@@ -99,6 +120,33 @@ namespace TimeTracker.ViewModels
             else
             {
                 await App.Current.MainPage.DisplayAlert(AppResources.AlertHeader, AppResources.SaveFail, AppResources.Ok);
+            }
+        }
+
+        private async Task ClearDB()
+        {
+            try
+            {
+                bool warning = await App.Current.MainPage.DisplayAlert(AppResources.AlertHeader, AppResources.AlertClearDB, AppResources.Ok, AppResources.Cancel);
+                if (warning)
+                {
+                    bool result = await RealmServices.DeleteAllItems<Item>();
+                    if (result)
+                    {
+                        DateTimeProperty = DateTime.Now;
+                        ItemsList = default;
+                        Item = new Item();
+                        await App.Current.MainPage.DisplayAlert(AppResources.AlertHeader, AppResources.ClearDB, AppResources.Ok);
+                    }
+                    else
+                    {
+                        await App.Current.MainPage.DisplayAlert(AppResources.AlertHeader, AppResources.GenericError, AppResources.Ok);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Clear DB error : {ex.Message}");
             }
         }
 

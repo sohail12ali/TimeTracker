@@ -9,7 +9,8 @@
              xmlns:converter="clr-namespace:TimeTracker.Converter"
              Title="{Binding Item.Description}"
              Visual="Material"
-             BackgroundColor="AntiqueWhite">
+             Shell.NavBarIsVisible="True"
+             BackgroundColor="Bisque">
 
     <ContentPage.BindingContext>
         <vm:HomePageViewModel />
@@ -17,56 +18,54 @@
 
     <ContentPage.Resources>
         <converter:DateTimeoffsetToTimeSpan x:Key="DateOffToTimespan" />
+        <Style TargetType="Frame">
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        
     </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Clear" Command="{Binding DeleteCommand}"/>
+    </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
         <ScrollView Orientation="Neither">
             <StackLayout Padding="10">
 
                 <!-- Time Picker-->
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                <Frame>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        
+                            <TimePicker Time="{Binding Item.InTime, Converter={StaticResource DateOffToTimespan}}"
+                                        VerticalOptions="CenterAndExpand"
+                                        Grid.Column="0"
+                                        HorizontalOptions="CenterAndExpand" />
+                          
+                            <TimePicker Time="{Binding Item.OutTime, Converter={StaticResource DateOffToTimespan}}"
+                                        VerticalOptions="CenterAndExpand"  
+                                        Grid.Column="1"
+                                        HorizontalOptions="CenterAndExpand" />
+                        <Label Text="{Binding TimeSpent}" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
+                               HorizontalOptions="CenterAndExpand"/>
 
-                    <Frame Grid.Row="0"
-                       Grid.Column="0">
-                        <Label Text="In Time"
-                       VerticalOptions="CenterAndExpand"
-                       HorizontalOptions="CenterAndExpand" />
-                    </Frame>
+                    </Grid>
+                </Frame>
 
-                    <Frame Grid.Row="0"
-                       Grid.Column="1">
-                        <TimePicker Time="{Binding Item.InTime, Converter={StaticResource DateOffToTimespan}}"
-                       VerticalOptions="CenterAndExpand"
-                       HorizontalOptions="CenterAndExpand" />
-                    </Frame>
-
-                    <Frame Grid.Row="1"
-                       Grid.Column="0">
-                        <Label Text="Out Time"
-                       VerticalOptions="CenterAndExpand"
-                       HorizontalOptions="CenterAndExpand" />
-                    </Frame>
-
-                    <Frame Grid.Row="1"
-                       Grid.Column="1">
-                        <TimePicker Time="{Binding Item.OutTime, Converter={StaticResource DateOffToTimespan}}"
-                       VerticalOptions="CenterAndExpand"
-                       HorizontalOptions="CenterAndExpand" />
-                    </Frame>
-                </Grid>
 
                 <!--Date Picker-->
                 <StackLayout>
                     <Frame>
-                        <DatePicker Date="{Binding DateTimeProperty}" />
+                        <DatePicker Date="{Binding DateTimeProperty}" Format="D" />
                     </Frame>
                 </StackLayout>
 

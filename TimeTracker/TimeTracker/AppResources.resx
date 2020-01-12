@@ -117,11 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AlertClearDB" xml:space="preserve">
+    <value>Do you really want to clear all Data?</value>
+  </data>
   <data name="AlertHeader" xml:space="preserve">
     <value>Alert!</value>
   </data>
   <data name="AppName" xml:space="preserve">
     <value>Time Tracker</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Nope!</value>
+  </data>
+  <data name="ClearDB" xml:space="preserve">
+    <value>Database Cleaned!</value>
+  </data>
+  <data name="GenericError" xml:space="preserve">
+    <value>Oops Somthing went wrong!</value>
   </data>
   <data name="HomeTitle" xml:space="preserve">
     <value>Home Page</value>

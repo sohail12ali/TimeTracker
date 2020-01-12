@@ -61,6 +61,15 @@ namespace TimeTracker {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you really want to clear all Data?.
+        /// </summary>
+        public static string AlertClearDB {
+            get {
+                return ResourceManager.GetString("AlertClearDB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alert!.
         /// </summary>
         public static string AlertHeader {
@@ -75,6 +84,33 @@ namespace TimeTracker {
         public static string AppName {
             get {
                 return ResourceManager.GetString("AppName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nope!.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database Cleaned!.
+        /// </summary>
+        public static string ClearDB {
+            get {
+                return ResourceManager.GetString("ClearDB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops Somthing went wrong!.
+        /// </summary>
+        public static string GenericError {
+            get {
+                return ResourceManager.GetString("GenericError", resourceCulture);
             }
         }
         
